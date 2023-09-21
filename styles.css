@@ -1,0 +1,66 @@
+body{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: black;
+    color: #03e9f4;
+}
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.info{
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    margin: 70px;
+    font-size: 20px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: 1s;
+}
+.info.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+.mainpage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 50%;
+    width: 400px;
+    height: 300px;
+}
+.mainpageButton{
+    cursor: pointer;
+    background-color: black;
+    color: #03e9f4;
+    font-weight: bold;
+    font-size: 25px;
+    border: 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1.5s;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+}
+.mainpageButton:hover{
+    transition: 1s;
+    background-color: #03e9f4;
+    color: black;
+    border-radius: 40px;
+    background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 25px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 25px #03e9f4;
+}
+
+.mainpageButton.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
