@@ -144,7 +144,7 @@ function startCountdown() {
     countdownInterval = setInterval(updateCountdown, 1000); 
     updateCountdown();
 }
-var countdownValue = 10; 
+var countdownValue = 60; 
 var countdownInterval;
 function updateCountdown() {
     const countdownElement = document.getElementById('timer');
