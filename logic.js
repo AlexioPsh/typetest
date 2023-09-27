@@ -83,28 +83,37 @@ function generateText(){
             letterElement.style.opacity=opc+"%";
             opc=opc-5;
         }
-        console.log(generatedText);
 
     }
+    return generatedText;
 }
 
 
 var currentLetter=0;
-
+var startTimer=0;
 document.addEventListener('keydown', function(event) {
-    // The 'event' object contains information about the key that was pressed
+
     if(event.key=="Shift" || event.key=="CapsLock"){
         return 0;
     }
     if(checkGameStart=="true"){
+        if(startTimer==0){
+            startCountdown();
+            startTimer=1;
+        }
         var letterElement = document.querySelector(".letter"+currentLetter);
         letterElement.style.borderBottom = '0px';
         if(event.key== letterElement.textContent){
             letterElement.style.color="green";
         }
         else{
-            console.log(letterElement.textContent);
-            letterElement.style.color="red";
+            if(event.key==" " && letterElement.textContent==String.fromCharCode(160)){
+                letterElement.style.color="green";
+            }
+            else{
+                console.log(letterElement.textContent);
+                letterElement.style.color="red";
+            }
         }
         currentLetter++;
         var firstLetter = document.querySelector(".letter"+(currentLetter - 50));
@@ -131,4 +140,62 @@ document.addEventListener('keydown', function(event) {
     else{
         console.log("game hasn't started yet");
     }
-  });
+});
+function startCountdown() {
+    countdownInterval = setInterval(updateCountdown, 1000); 
+    updateCountdown();
+}
+var countdownValue = 60; 
+var countdownInterval;
+function updateCountdown() {
+    const countdownElement = document.getElementById('timer');
+    if (countdownValue >= 0) {
+        const minutes = Math.floor(countdownValue / 60);
+        const seconds = countdownValue % 60;
+        countdownElement.textContent = `Time remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        countdownValue--;
+    } else {
+        checkGameStart="false";
+        var displayAnalytics = document.querySelector(".displayAnalytics");
+        displayAnalytics.style.display="block";
+        var analytics = document.querySelector(".analytics");
+        analytics.classList.add("animated");
+        analyse();
+        clearInterval(countdownInterval);
+    }
+
+}
+function analyse(){
+    var accuracy=0;
+    var accuracyElement = document.getElementById('accuracy');
+    var letterElement;
+    for(var x=0; x<currentLetter; x++){
+        letterElement = document.querySelector(".letter"+x);
+        if(letterElement.style.color=="green"){
+            accuracy++;
+        }
+    }
+    accuracyElement.textContent = "Accuracy: " + (accuracy/currentLetter*100).toFixed(2) + "%";
+    var wpmElement = document.getElementById('wpm');
+    wpmElement.textContent = currentLetter/5;
+}
+
+function restart(){
+    var displayAnalytics = document.querySelector(".displayAnalytics");
+    displayAnalytics.style.display="none";
+    var analytics = document.querySelector(".analytics");
+    analytics.classList.remove("animated");
+    var length= generateText();
+    console.log(length);
+    limiterRand=0;
+    currentLetter=0;
+    startTimer=0;
+    countdownValue = 60; 
+    countdownInterval;
+    checkGameStart="true";
+    for(var x=0; x<length.length; x++){
+        var letterElement = document.querySelector(".letter"+x);
+        letterElement.remove();
+    }
+    generateText();
+}
