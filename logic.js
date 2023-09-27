@@ -165,6 +165,7 @@ function updateCountdown() {
 
 }
 function analyse(){
+    var score=0;
     var accuracy=0;
     var accuracyElement = document.getElementById('accuracy');
     var letterElement;
@@ -172,11 +173,17 @@ function analyse(){
         letterElement = document.querySelector(".letter"+x);
         if(letterElement.style.color=="green"){
             accuracy++;
+            score=score+15;
+        }
+        else{
+            score=score-10;
         }
     }
     accuracyElement.textContent = "Accuracy: " + (accuracy/currentLetter*100).toFixed(2) + "%";
     var wpmElement = document.getElementById('wpm');
     wpmElement.textContent = currentLetter/5;
+    var scoreElement = document.getElementById('score');
+    scoreElement.textContent = score;
 }
 
 function restart(){
