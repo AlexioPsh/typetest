@@ -26,7 +26,7 @@ function randomizer(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 var limiterRand=0;
-
+var generatedText="";
 function generateText(){
     var phrases=[
         "In the grand tapestry of life, every thread represents a unique story waiting to be woven into the fabric of our existence.",
@@ -50,7 +50,6 @@ function generateText(){
         "The echo of history resonates in the footprints of our ancestors, shaping the path on which we tread toward an uncertain future.",
         "In the theater of dreams, our imaginations take center stage, crafting stories that transcend reality and nourish the spirit.",
     ];
-    var generatedText="";
     if(limiterRand==0){
         var min=0;
         var max=19;
@@ -145,7 +144,7 @@ function startCountdown() {
     countdownInterval = setInterval(updateCountdown, 1000); 
     updateCountdown();
 }
-var countdownValue = 60; 
+var countdownValue = 10; 
 var countdownInterval;
 function updateCountdown() {
     const countdownElement = document.getElementById('timer');
@@ -185,17 +184,16 @@ function restart(){
     displayAnalytics.style.display="none";
     var analytics = document.querySelector(".analytics");
     analytics.classList.remove("animated");
-    var length= generateText();
-    console.log(length);
     limiterRand=0;
     currentLetter=0;
     startTimer=0;
     countdownValue = 60; 
     countdownInterval;
     checkGameStart="true";
-    for(var x=0; x<length.length; x++){
+    for(var x=0; x<generatedText.length-1; x++){
         var letterElement = document.querySelector(".letter"+x);
         letterElement.remove();
     }
+    updateCountdown();
     generateText();
 }
