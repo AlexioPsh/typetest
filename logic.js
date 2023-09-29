@@ -92,10 +92,11 @@ var currentLetter=0;
 var startTimer=0;
 document.addEventListener('keydown', function(event) {
 
-    if(event.key=="Shift" || event.key=="CapsLock"){
+    if(event.key=="Shift" || event.key=="CapsLock" || event.key=="Backspace"){
         return 0;
     }
     if(checkGameStart=="true"){
+        console.log(event.key);
         if(startTimer==0){
             startCountdown();
             startTimer=1;
