@@ -92,7 +92,10 @@ var currentLetter=0;
 var startTimer=0;
 document.addEventListener('keydown', function(event) {
 
-    if(event.key=="Shift" || event.key=="CapsLock" || event.key=="Backspace"){
+    if(event.key=="Shift" || event.key=="CapsLock"){
+        return 0;
+    }
+    if(event.key=="Backspace" && currentLetter==0){
         return 0;
     }
     if(checkGameStart=="true"){
@@ -103,7 +106,7 @@ document.addEventListener('keydown', function(event) {
         }
         var letterElement = document.querySelector(".letter"+currentLetter);
         letterElement.style.borderBottom = '0px';
-        if(event.key== letterElement.textContent){
+        if(event.key== letterElement.textContent && event.key!="Backspace"){
             letterElement.style.color="green";
         }
         else{
@@ -111,11 +114,19 @@ document.addEventListener('keydown', function(event) {
                 letterElement.style.color="green";
             }
             else{
-                console.log(letterElement.textContent);
-                letterElement.style.color="red";
+                if(event.key=="Backspace"){
+                    currentLetter--;
+                    var letterElement = document.querySelector(".letter"+currentLetter);
+                    letterElement.style.color="#03e9f4";
+                }
+                else{
+                    letterElement.style.color="red";                    
+                }
             }
         }
-        currentLetter++;
+        if(event.key!="Backspace"){
+            currentLetter++;
+        }
         var firstLetter = document.querySelector(".letter"+(currentLetter - 50));
         var lastLetter = document.querySelector(".letter"+(currentLetter + 50));
         if (currentLetter >= 50) {
@@ -175,6 +186,8 @@ function analyse(){
         if(letterElement.style.color=="green"){
             accuracy++;
             score=score+15;
+            console.log(accuracy);
+            console.log(score);
         }
         else{
             score=score-10;
